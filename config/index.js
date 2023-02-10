@@ -1,3 +1,4 @@
+const path = require('node:path')
 const config = {
   projectName: 'ai-chat',
   date: '2023-2-9',
@@ -71,7 +72,10 @@ const config = {
         enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
       }
     }
-  }
+  },
+  alias: {
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+  },
 }
 
 module.exports = function (merge) {

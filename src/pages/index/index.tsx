@@ -1,6 +1,6 @@
+import { wsPromise } from "@/utils/ws-client";
 import { Text, View } from '@tarojs/components';
 import { useEffect } from 'react';
-import { wsPromise } from "../../../src/utils/ws-client";
 import './index.less';
 
 export default function Index() {
