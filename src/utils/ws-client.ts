@@ -1,5 +1,10 @@
 import Taro from "@tarojs/taro"
 
+export type WsType = {
+  socket: Taro.SocketTask,
+  send: (value: any) => void,
+  onMessage: <T = any>(callback: Taro.SocketTask.OnMessageCallback<T>) => void
+}
 export const wsPromise = (async () => {
   const socket = await Taro.connectSocket({
     url: 'ws://127.0.0.1:3332',
