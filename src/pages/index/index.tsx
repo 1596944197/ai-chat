@@ -1,21 +1,23 @@
 import { wsPromise, WsType } from "@/utils/ws-client";
 import { Text, Textarea, View } from "@tarojs/components";
-import { useEffect, useState } from "react";
 import { OsList } from "ossaui";
+import { useEffect, useState } from "react";
 import "./index.less";
 
 let ws: WsType;
+
+const response: string[] = []
 export default function Index() {
-  const [response, setResponse] = useState<string[]>([]);
   const [v2, setV2] = useState("186");
+  const [isRequest, setIsRequest] = useState(false);
 
   useEffect(() => {
     (async () => {
       ws = await wsPromise;
-      ws.send("hello,i'am super man");
+      console.log('更新了一次')
       ws.onMessage(({ data }) => {
-        // ! 有问题
-        setResponse([...response, data]);
+        setIsRequest(false)
+        response.push(data)
       });
     })();
   }, []);
@@ -38,7 +40,11 @@ export default function Index() {
         controlled="true"
         placeholder="测试"
         onInput={({ detail: { value } }) => setV2(value)}
-        onBlur={() => ws.send(v2)}
+        onBlur={() => {
+          if (isRequest) return
+          ws.send(v2)
+          setIsRequest(true)
+        }}
       ></Textarea>
     </View>
   );
